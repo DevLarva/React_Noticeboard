@@ -7,9 +7,9 @@ import { Container, Box } from '@mui/material';
 const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([
-    { title: '첫 번째 게시물', date: '2023-07-05' },
-    { title: '두 번째 게시물', date: '2023-07-06' },
-    { title: '세 번째 게시물', date: '2023-07-07' },
+    { number: 1, title: '첫 번째 게시물', author: '홍길동', date: '2023-07-05' },
+    { number: 2, title: '두 번째 게시물', author: '홍길동', date: '2023-07-06' },
+    { number: 3, title: '세 번째 게시물', author: '홍길동', date: '2023-07-07' },
   ]);
 
   const filteredPosts = posts.filter(post =>
