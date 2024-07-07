@@ -1,17 +1,17 @@
 import React from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 
-const PostList = ({ posts }) => {
+export default function PostList({ posts }) {
     return (
         <TableContainer component={Paper}>
 
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell>제목</TableCell>
-                        <TableCell>글쓴이</TableCell>
-                        <TableCell>작성날짜</TableCell>
+                        <TableCell sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>No</TableCell>
+                        <TableCell sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>제목</TableCell>
+                        <TableCell sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>작성자</TableCell>
+                        <TableCell sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>작성날짜</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -28,5 +28,3 @@ const PostList = ({ posts }) => {
         </TableContainer>
     );
 };
-
-export default PostList;
