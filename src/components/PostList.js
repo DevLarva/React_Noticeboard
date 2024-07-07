@@ -1,62 +1,53 @@
-import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Box, Typography, Card, CardContent } from '@mui/material';
+import React from 'react';
+import { List, ListItem, ListItemText, Box, Typography, Card, CardContent, Divider } from '@mui/material';
 
 const PostList = ({ posts }) => {
-    const [pageNumber, setPageNumber] = useState(0);
-    const postsPerPage = 10;
-    const pagesVisited = pageNumber * postsPerPage;
-
-    const displayPosts = posts
-        .slice(pagesVisited, pagesVisited + postsPerPage)
-        .map((post, index) => (
-            <ListItem key={index} button>
-                <ListItemText
-                    primary={
-                        <Box sx={{ display: 'flex', gap: 30 }}>
-                            <Typography variant="body1" sx={{ flexShrink: 0 }}>
-                                {post.number}
-                            </Typography>
-                            <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                                {post.title}
-                            </Typography>
-                            <Typography variant="body1" sx={{ flexShrink: 0, marginLeft: '30px' }}>
-                                {post.author}
-                            </Typography>
-                            <Typography variant="body1" sx={{ flexShrink: 0, marginLeft: '10px' }}>
-                                {post.date}
-                            </Typography>
-                        </Box>
-                    }
-                />
-            </ListItem>
-        ));
-
-    const pageCount = Math.ceil(posts.length / postsPerPage);
-
-    const changePage = ({ selected }) => {
-        setPageNumber(selected);
-    };
-
     return (
         <Card variant="outlined">
             <CardContent>
-                <Box sx={{ display: 'flex', gap: 30, paddingBottom: 2, borderBottom: '1px solid #ddd' }}>
-                    <Typography variant="body1" sx={{ flexShrink: 0, fontWeight: 'bold' }}>
-                        No
-                    </Typography>
-                    <Typography variant="body1" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-                        제목
-                    </Typography>
-                    <Typography variant="body1" sx={{ flexShrink: 0, fontWeight: 'bold', marginLeft: '30px' }}>
-                        작성자
-                    </Typography>
-                    <Typography variant="body1" sx={{ flexShrink: 0, fontWeight: 'bold', marginLeft: '30px' }}>
-                        날짜
-                    </Typography>
+                <Box sx={{ borderBottom: '1px solid #ddd' }}>
+                    <Box sx={{ display: 'flex', paddingBottom: 2 }}>
+                        <Typography variant="body1" sx={{ flexBasis: '10%', fontWeight: 'bold' }}>
+                            No
+                        </Typography>
+                        <Typography variant="body1" sx={{ flexBasis: '50%', fontWeight: 'bold' }}>
+                            제목
+                        </Typography>
+                        <Typography variant="body1" sx={{ flexBasis: '20%', fontWeight: 'bold' }}>
+                            작성자
+                        </Typography>
+                        <Typography variant="body1" sx={{ flexBasis: '20%', fontWeight: 'bold' }}>
+                            날짜
+                        </Typography>
+                    </Box>
+                    <List>
+                        {posts.map((post, index) => (
+                            <React.Fragment key={index}>
+                                <ListItem button>
+                                    <ListItemText
+                                        primary={
+                                            <Box sx={{ display: 'flex' }}>
+                                                <Typography variant="body1" sx={{ flexBasis: '10%' }}>
+                                                    {post.number}
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ flexBasis: '50%' }}>
+                                                    {post.title}
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ flexBasis: '20%' }}>
+                                                    {post.author}
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ flexBasis: '20%' }}>
+                                                    {post.date}
+                                                </Typography>
+                                            </Box>
+                                        }
+                                    />
+                                </ListItem>
+                                {index < posts.length - 1 && <Divider />}
+                            </React.Fragment>
+                        ))}
+                    </List>
                 </Box>
-                <List>
-                    {displayPosts}
-                </List>
             </CardContent>
         </Card>
     );
