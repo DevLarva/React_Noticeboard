@@ -7,13 +7,15 @@ import { Container, Box } from '@mui/material';
 const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([
-    { number: 1, title: '첫 번째 게시물', author: '홍길동', date: '2023-07-05' },
-    { number: 2, title: '두 번째 게시물', author: '홍길동', date: '2023-07-06' },
-    { number: 3, title: '세 번째 게시물', author: '홍길동', date: '2023-07-07' },
+    { title: '첫 번째 게시물', date: '2023-07-05', author: '홍길동', number: 1 },
+    { title: '두 번째 게시물', date: '2023-07-06', author: '홍길동', number: 2 },
+    { title: '세 번째 게시물', date: '2023-07-07', author: '홍길동', number: 3 },
   ]);
 
+  const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, '');
+
   const filteredPosts = posts.filter(post =>
-    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+    normalizeText(post.title).includes(normalizeText(searchQuery))
   );
 
   return (
