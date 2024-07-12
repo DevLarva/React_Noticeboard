@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import PostList from './components/PostList';
 import NewPostButton from './components/NewPostButton';
+import PostView from './components/PostView';
 import { Container, Box } from '@mui/material';
 
-export default function App() {
+function Main() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCriteria, setSearchCriteria] = useState('title');
   const [posts, setPosts] = useState([
@@ -21,28 +23,40 @@ export default function App() {
     normalizeText(post[searchCriteria]).includes(normalizeText(searchQuery))
   );
 
+  const navigate = useNavigate();
+
   const handleNewPostClick = () => {
-    // 새 글 작성 폼을 여는 기능을 추가.
-    alert('새 글 작성 폼 열기');
+    navigate('/newpost');
   };
 
   return (
-    <div>
+    <>
+      <Box my={4}>
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          searchCriteria={searchCriteria}
+          setSearchCriteria={setSearchCriteria}
+        />
+      </Box>
+      <Box my={4} sx={{ position: 'relative' }}>
+        <PostList posts={filteredPosts} />
+        <NewPostButton onClick={handleNewPostClick} />
+      </Box>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
       <Header />
       <Container>
-        <Box my={4}>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            searchCriteria={searchCriteria}
-            setSearchCriteria={setSearchCriteria}
-          />
-        </Box>
-        <Box my={4} sx={{ position: 'relative' }}>
-          <PostList posts={filteredPosts} />
-          <NewPostButton onClick={handleNewPostClick} />
-        </Box>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/newpost" element={<PostView />} />
+        </Routes>
       </Container>
-    </div>
+    </Router>
   );
 }

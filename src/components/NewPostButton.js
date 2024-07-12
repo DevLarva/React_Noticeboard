@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 
 export default function NewPostButton({ onClick }) {
     return (
@@ -8,9 +8,11 @@ export default function NewPostButton({ onClick }) {
                 color="primary"
                 variant="contained"
                 onClick={onClick}
-                size="large"
             >
-                글작성
+                <Typography variant="body1">
+                    글작성
+                </Typography>
+
             </Button>
         </Box>
     );
