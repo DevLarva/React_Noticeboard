@@ -10,7 +10,10 @@ import {
     InputLabel,
     Select,
     MenuItem,
-    Box
+    Box,
+    Checkbox,
+    FormGroup,
+    FormControlLabel
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -53,10 +56,15 @@ export default function PostView() {
             <Typography variant="h5" gutterBottom>
                 글 작성
             </Typography>
+            <FormGroup>
+
+                <FormControlLabel control={<Checkbox defaultChecked />} label="외주업체 공유" />
+            </FormGroup>
+
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <TextField
-                        label="제목"
+                        label="행사명"
                         variant="outlined"
                         fullWidth
                         value={title}
@@ -87,7 +95,7 @@ export default function PostView() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                     <Box sx={{ my: 2, p: 2, border: '2px dashed #ccc', borderRadius: '4px', textAlign: 'center' }} {...getRootProps()}>
                         <input {...getInputProps()} />
                         <CloudUploadIcon sx={{ fontSize: 48, color: '#ccc' }} />
@@ -142,3 +150,13 @@ export default function PostView() {
         </Paper>
     );
 }
+
+
+
+/*
+필수 내용
+행사명 , 행사 장소
+업체명, 부스사이즈
+설치기간, 행사기간, 철수기간
+담당디자이너
+*/
