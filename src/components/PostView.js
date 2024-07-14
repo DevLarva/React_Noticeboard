@@ -1,27 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import {
-    Paper,
-    Typography,
-    Grid,
-    TextField,
-    Button,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Box,
-    Checkbox,
-    FormGroup,
-    FormControlLabel
-} from '@mui/material';
+import { Paper, Typography, Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export default function PostView() {
     const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
+    const [locate, setLocate] = useState('');
     const [content, setContent] = useState('');
-    const [category, setCategory] = useState('');
+    const [companyName, setCompanyName] = useState('');
+    const [boothWidth, setBoothWidth] = useState('');
+    const [boothHeight, setBoothHeight] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -31,7 +19,6 @@ export default function PostView() {
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', maxSize: 3145728 });
 
     const handleUpload = () => {
-        // 파일 업로드 처리 로직 추가
         if (selectedFile) {
             console.log(selectedFile);
         } else {
@@ -40,14 +27,16 @@ export default function PostView() {
     };
 
     const handleSubmit = () => {
-        console.log({ title, author, content, category });
+        console.log({ title, locate, content, companyName, boothWidth, boothHeight });
     };
 
     const handleCancel = () => {
         setTitle('');
-        setAuthor('');
+        setLocate('');
         setContent('');
-        setCategory('');
+        setCompanyName('');
+        setBoothWidth('');
+        setBoothHeight('');
         setSelectedFile(null);
     };
 
@@ -57,10 +46,8 @@ export default function PostView() {
                 글 작성
             </Typography>
             <FormGroup>
-
                 <FormControlLabel control={<Checkbox defaultChecked />} label="외주업체 공유" />
             </FormGroup>
-
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <TextField
@@ -74,26 +61,47 @@ export default function PostView() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        label="작성자"
+                        label="행사 장소"
                         variant="outlined"
                         fullWidth
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
+                        value={locate}
+                        onChange={(e) => setLocate(e.target.value)}
                         required
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                        <InputLabel>카테고리</InputLabel>
-                        <Select
-                            label="카테고리"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        >
-                            <MenuItem value="카테고리1">카테고리1</MenuItem>
-                            <MenuItem value="카테고리2">카테고리2</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <TextField
+                        label="업체명"
+                        variant="outlined"
+                        fullWidth
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Typography variant="h6" gutterBottom>
+                        부스 크기
+                    </Typography>
+                    <Box display="flex" alignItems="center">
+                        <TextField
+                            variant="outlined"
+                            value={boothWidth}
+                            onChange={(e) => setBoothWidth(e.target.value)}
+                            required
+                            sx={{ flex: 1 }}
+                        />
+                        <Typography sx={{ mx: 1 }}>mm</Typography>
+                        <Typography sx={{ mx: 3 }}>X</Typography>
+                        <TextField
+                            variant="outlined"
+                            value={boothHeight}
+                            onChange={(e) => setBoothHeight(e.target.value)}
+                            required
+                            sx={{ flex: 1 }}
+                        />
+                        <Typography sx={{ mx: 1 }}>mm</Typography>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Box sx={{ my: 2, p: 2, border: '2px dashed #ccc', borderRadius: '4px', textAlign: 'center' }} {...getRootProps()}>
@@ -150,6 +158,8 @@ export default function PostView() {
         </Paper>
     );
 }
+
+
 
 
 
