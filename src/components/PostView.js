@@ -1,7 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Paper, Typography, Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale';
 
 export default function PostView() {
     const [title, setTitle] = useState('');
@@ -10,6 +13,7 @@ export default function PostView() {
     const [companyName, setCompanyName] = useState('');
     const [boothWidth, setBoothWidth] = useState('');
     const [boothHeight, setBoothHeight] = useState('');
+    const [installDate, setInstallDate] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -27,7 +31,7 @@ export default function PostView() {
     };
 
     const handleSubmit = () => {
-        console.log({ title, locate, content, companyName, boothWidth, boothHeight });
+        console.log({ title, locate, content, companyName, boothWidth, boothHeight, installDate });
     };
 
     const handleCancel = () => {
@@ -37,6 +41,7 @@ export default function PostView() {
         setCompanyName('');
         setBoothWidth('');
         setBoothHeight('');
+        setInstallDate(null);
         setSelectedFile(null);
     };
 
@@ -104,6 +109,16 @@ export default function PostView() {
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
+
+                    <DatePicker
+                        locale={ko}
+                        selected={installDate}
+                        onChange={(date) => setInstallDate(date)}
+                        dateFormat="yyyy/MM/dd"
+                        customInput={<TextField fullWidth label="설치 기간" variant="outlined" />}
+                    />
+                </Grid>
+                <Grid item xs={12}>
                     <Box sx={{ my: 2, p: 2, border: '2px dashed #ccc', borderRadius: '4px', textAlign: 'center' }} {...getRootProps()}>
                         <input {...getInputProps()} />
                         <CloudUploadIcon sx={{ fontSize: 48, color: '#ccc' }} />
@@ -163,10 +178,13 @@ export default function PostView() {
 
 
 
+
 /*
 필수 내용
 행사명 , 행사 장소
 업체명, 부스사이즈
 설치기간, 행사기간, 철수기간
 담당디자이너
+
+행사 기간, 설치기간 철수 기간 다른점 및 어떻게 입력 받을 건지 질문.
 */
