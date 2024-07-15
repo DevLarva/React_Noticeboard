@@ -15,6 +15,7 @@ export default function PostView() {
     const [boothHeight, setBoothHeight] = useState('');
     const [installDate, setInstallDate] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [designer, setDesigner] = useState('');
 
     const onDrop = useCallback((acceptedFiles) => {
         setSelectedFile(acceptedFiles[0]);
@@ -43,6 +44,7 @@ export default function PostView() {
         setBoothHeight('');
         setInstallDate(null);
         setSelectedFile(null);
+        setDesigner('');
     };
 
     return (
@@ -64,7 +66,7 @@ export default function PostView() {
                         required
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <TextField
                         label="행사 장소"
                         variant="outlined"
@@ -74,13 +76,23 @@ export default function PostView() {
                         required
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <TextField
                         label="업체명"
                         variant="outlined"
                         fullWidth
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <TextField
+                        label="담당 디자이너"
+                        variant="outlined"
+                        fullWidth
+                        value={designer}
+                        onChange={(e) => setDesigner(e.target.value)}
                         required
                     />
                 </Grid>
