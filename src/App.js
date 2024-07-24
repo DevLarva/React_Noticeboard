@@ -6,6 +6,7 @@ import PostList from './components/PostList';
 import NewPostButton from './components/NewPostButton';
 import PostView from './components/PostView';
 import { Container, Box } from '@mui/material';
+import ClientPostView from './components/ClientPostView';
 
 function Main() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,7 +55,7 @@ export default function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/newpost" element={<PostView />} />
+          <Route path="/newpost" element={<ClientPostView />} />
         </Routes>
       </Container>
     </Router>
