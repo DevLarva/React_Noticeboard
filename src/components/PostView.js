@@ -14,19 +14,20 @@ export default function PostView() {
     const [boothWidth, setBoothWidth] = useState('');
     const [boothHeight, setBoothHeight] = useState('');
     const [installDate, setInstallDate] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [designer, setDesigner] = useState('');
 
     const onDrop = useCallback((acceptedFiles) => {
-        setSelectedFile(acceptedFiles[0]);
+        setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     }, []);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
 
-
     const handleUpload = () => {
-        if (selectedFile) {
-            console.log(selectedFile);
+        if (selectedFiles.length > 0) {
+            selectedFiles.forEach(file => {
+                console.log(file);
+            });
         } else {
             console.log("파일이 선택되지 않았습니다.");
         }
@@ -44,7 +45,7 @@ export default function PostView() {
         setBoothWidth('');
         setBoothHeight('');
         setInstallDate(null);
-        setSelectedFile(null);
+        setSelectedFiles([]);
         setDesigner('');
     };
 
@@ -122,7 +123,6 @@ export default function PostView() {
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
-
                     <DatePicker
                         locale={ko}
                         selected={installDate}
@@ -139,14 +139,16 @@ export default function PostView() {
                             클릭 혹은 파일을 이곳에 드롭하세요.
                         </Typography>
                         <Typography variant="body2" sx={{ mt: 1, color: '#666' }}>
-                            파일당 최대 10MB
+                            파일당 최대 3MB
                         </Typography>
                     </Box>
-                    {selectedFile && (
+                    {selectedFiles.length > 0 && (
                         <Box mt={2}>
-                            <Typography variant="body2">
-                                선택된 파일: {selectedFile.name}
-                            </Typography>
+                            {selectedFiles.map((file, index) => (
+                                <Typography key={index} variant="body2">
+                                    선택된 파일: {file.name}
+                                </Typography>
+                            ))}
                         </Box>
                     )}
                 </Grid>

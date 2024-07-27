@@ -15,10 +15,11 @@ export default function ClientPostView() {
     const [boothLayout, setBoothLayout] = useState('');
     const [installDate, setInstallDate] = useState(null);
     const [removeDate, setRemoveDate] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
 
     const onDrop = useCallback((acceptedFiles) => {
-        setSelectedFile(acceptedFiles[0]);
+        setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     }, []);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
@@ -26,7 +27,7 @@ export default function ClientPostView() {
     // 다시 공부 필요.
 
     const handleSubmit = () => {
-        console.log({ eventName, companyName, manager, callNumber, location, boothLayout, installDate, removeDate, selectedFile });
+        console.log({ eventName, companyName, manager, callNumber, location, boothLayout, installDate, removeDate, selectedFiles });
     };
 
     const handleCancel = () => {
@@ -38,7 +39,7 @@ export default function ClientPostView() {
         setBoothLayout('');
         setInstallDate(null);
         setRemoveDate(null);
-        setSelectedFile(null);
+        setSelectedFiles([]);
     };
 
     return (
@@ -171,11 +172,13 @@ export default function ClientPostView() {
                                 파일당 최대 3MB
                             </Typography>
                         </Box>
-                        {selectedFile && (
+                        {selectedFiles.length > 0 && (
                             <Box mt={2}>
-                                <Typography variant="body2">
-                                    선택된 파일: {selectedFile.name}
-                                </Typography>
+                                {selectedFiles.map((file, index) => (
+                                    <Typography key={index} variant="body2">
+                                        선택된 파일: {file.name}
+                                    </Typography>
+                                ))}
                             </Box>
                         )}
                     </Grid>

@@ -55,7 +55,7 @@ export default function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/newpost" element={<ClientPostView />} />
+          <Route path="/newpost" element={<PostView />} />
         </Routes>
       </Container>
     </Router>
