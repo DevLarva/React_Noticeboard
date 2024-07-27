@@ -21,7 +21,8 @@ export default function PostView() {
         setSelectedFile(acceptedFiles[0]);
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', maxSize: 3145728 });
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
+
 
     const handleUpload = () => {
         if (selectedFile) {

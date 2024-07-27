@@ -16,13 +16,14 @@ export default function ClientPostView() {
     const [installDate, setInstallDate] = useState(null);
     const [removeDate, setRemoveDate] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [department, setDepartment] = useState('앤드앤');
 
     const onDrop = useCallback((acceptedFiles) => {
         setSelectedFile(acceptedFiles[0]);
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*', maxSize: 3145728 });
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
+
+    // 다시 공부 필요.
 
     const handleSubmit = () => {
         console.log({ eventName, companyName, manager, callNumber, location, boothLayout, installDate, removeDate, selectedFile });
