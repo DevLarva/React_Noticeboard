@@ -7,15 +7,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 
 export default function ClientPostView() {
-    const [eventName, setEventName] = useState('');
-    const [companyName, setCompanyName] = useState('');
-    const [manager, setManager] = useState('');
-    const [callNumber, setCallNumber] = useState('');
-    const [location, setLocation] = useState('');
-    const [boothLayout, setBoothLayout] = useState('');
-    const [installDate, setInstallDate] = useState(null);
-    const [removeDate, setRemoveDate] = useState(null);
-    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [eventName, setEventName] = useState(''); //행사명    
+    const [companyName, setCompanyName] = useState(''); //업체명
+    const [manager, setManager] = useState(''); // 담당자
+    const [callNumber, setCallNumber] = useState('');   //연락처
+    const [location, setLocation] = useState('');   //장소
+    const [boothLayout, setBoothLayout] = useState(''); //부스배치도
+    const [installDate, setInstallDate] = useState(null);   //설치일자
+    const [removeDate, setRemoveDate] = useState(null); // 철수일자
+    const [selectedFiles, setSelectedFiles] = useState([]); //첨부파일
 
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -266,4 +266,7 @@ Client
 그래픽 신청 내역
 (이미지 첨부)
 물품 픽업
+
+달력 수정
+
 */
