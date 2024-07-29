@@ -7,15 +7,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 
 export default function PostView() {
-    const [title, setTitle] = useState('');
-    const [locate, setLocate] = useState('');
-    const [content, setContent] = useState('');
-    const [companyName, setCompanyName] = useState('');
-    const [boothWidth, setBoothWidth] = useState('');
-    const [boothHeight, setBoothHeight] = useState('');
-    const [installDate, setInstallDate] = useState(null);
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [designer, setDesigner] = useState('');
+    const [title, setTitle] = useState('');     //행사명
+    const [locate, setLocate] = useState('');   //행사장소
+    const [content, setContent] = useState(''); //내용
+    const [companyName, setCompanyName] = useState(''); //업체명
+    const [boothWidth, setBoothWidth] = useState('');   //부스 크기(너비)
+    const [boothHeight, setBoothHeight] = useState(''); //부스 크기(높이)
+    const [installDate, setInstallDate] = useState(null);   // 설치 날짜
+    const [selectedFiles, setSelectedFiles] = useState([]); //첨부 파일
+    const [designer, setDesigner] = useState('');       //담당 디자이너
 
     const onDrop = useCallback((acceptedFiles) => {
         setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
