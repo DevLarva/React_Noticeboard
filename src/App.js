@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import PostList from './components/PostList';
 import NewPostButton from './components/NewPostButton';
 import PostView from './components/PostView';
-import { Container, Box } from '@mui/material';
 import ClientPostView from './components/ClientPostView';
+import { Container, Box } from '@mui/material';
+import axios from 'axios';
+
+// axios 기본 URL 설정
+axios.defaults.baseURL = 'http://andn-btest-env.eba-zwp5cit2.ap-northeast-2.elasticbeanstalk.com';
 
 function Main() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCriteria, setSearchCriteria] = useState('title');
-  const [posts, setPosts] = useState([
-    { title: '첫 번째 게시물', date: '2023-07-05', author: '홍길동' },
-    { title: '두 번째 게시물', date: '2023-07-06', author: '홍길동' },
-    { title: '세 번째 게시물', date: '2023-07-07', author: '홍길동' },
-    { title: '가 번게 물시게', date: '2023-07-07', author: '홍길동' },
-  ]);
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('/api/andn/articles')
+      .then(response => {
+        setPosts(response.data);
+      })
+      .catch(error => {
+        console.error("게시물 가져오기 실패:", error);
+      });
+  }, []);
 
   const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, '');
 
@@ -24,10 +34,20 @@ function Main() {
     normalizeText(post[searchCriteria]).includes(normalizeText(searchQuery))
   );
 
-  const navigate = useNavigate();
-
   const handleNewPostClick = () => {
     navigate('/newpost');
+  };
+
+  const handlePostSaved = () => {
+    // 새 게시물 저장 후 게시물 목록 새로고침
+    axios.get('/api/andn/articles')
+      .then(response => {
+        setPosts(response.data);
+        navigate('/');
+      })
+      .catch(error => {
+        console.error("게시물 가져오기 실패:", error);
+      });
   };
 
   return (
@@ -48,6 +68,22 @@ function Main() {
   );
 }
 
+function ClientPostList() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/outsourcing/articles')
+      .then(response => {
+        setPosts(response.data);
+      })
+      .catch(error => {
+        console.error("외주업체 글 가져오기 실패:", error);
+      });
+  }, []);
+
+  return <PostList posts={posts} />;
+}
+
 export default function App() {
   return (
     <Router>
@@ -55,7 +91,8 @@ export default function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/newpost" element={<PostView />} />
+          <Route path="/newpost" element={<PostView onPostSaved={() => { }} />} />
+          <Route path="/client/posts" element={<ClientPostList />} />
         </Routes>
       </Container>
     </Router>

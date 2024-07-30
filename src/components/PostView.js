@@ -13,7 +13,7 @@ export default function PostView() {
     const [companyName, setCompanyName] = useState(''); //업체명
     const [boothWidth, setBoothWidth] = useState('');   //부스 크기(너비)
     const [boothHeight, setBoothHeight] = useState(''); //부스 크기(높이)
-    const [installDate, setInstallDate] = useState(null);   // 설치 날짜
+    const [installDateRange, setInstallDateRange] = useState([null, null]);   // 설치 날짜 범위
     const [selectedFiles, setSelectedFiles] = useState([]); //첨부 파일
     const [designer, setDesigner] = useState('');       //담당 디자이너
 
@@ -34,7 +34,7 @@ export default function PostView() {
     };
 
     const handleSubmit = () => {
-        console.log({ title, locate, content, companyName, boothWidth, boothHeight, installDate });
+        console.log({ title, locate, content, companyName, boothWidth, boothHeight, installDateRange });
     };
 
     const handleCancel = () => {
@@ -44,7 +44,7 @@ export default function PostView() {
         setCompanyName('');
         setBoothWidth('');
         setBoothHeight('');
-        setInstallDate(null);
+        setInstallDateRange([null, null]);
         setSelectedFiles([]);
         setDesigner('');
     };
@@ -125,8 +125,10 @@ export default function PostView() {
                 <Grid item xs={12}>
                     <DatePicker
                         locale={ko}
-                        selected={installDate}
-                        onChange={(date) => setInstallDate(date)}
+                        selectsRange
+                        startDate={installDateRange[0]}
+                        endDate={installDateRange[1]}
+                        onChange={(update) => setInstallDateRange(update)}
                         dateFormat="yyyy/MM/dd"
                         customInput={<TextField fullWidth label="설치 기간" variant="outlined" />}
                     />
@@ -188,6 +190,7 @@ export default function PostView() {
         </Paper>
     );
 }
+
 
 
 
