@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from "../api/api";  // API 유틸리티 파일을 임포트
 import { useDropzone } from 'react-dropzone';
 import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -22,7 +22,7 @@ export default function PostView() {
 
     useEffect(() => {
         // 외주업체 목록 가져오기
-        axios.get('/api/outsourcing')
+        api.get('/api/outsourcing')
             .then(response => {
                 setOutsourcingOptions(response.data);
             })
@@ -64,7 +64,7 @@ export default function PostView() {
                 formData.append('files', file);
             });
 
-            const response = await axios.post('/api/andn/article', formData, {
+            const response = await api.post('/api/andn/article', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -214,6 +214,27 @@ export default function PostView() {
                         autoComplete="off"
                     />
                 </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        select
+                        variant="outlined"
+                        fullWidth
+                        value={selectedOutsourcingId}
+                        onChange={(e) => setSelectedOutsourcingId(e.target.value)}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        required
+                        autoComplete="off"
+                    >
+                        <option value="">외주업체 선택</option>
+                        {outsourcingOptions.map(option => (
+                            <option key={option.id} value={option.id}>
+                                {option.name}
+                            </option>
+                        ))}
+                    </TextField>
+                </Grid>
                 <Grid item xs={12} sm={6}>
                     <Button
                         variant="contained"
@@ -238,9 +259,6 @@ export default function PostView() {
         </Paper>
     );
 }
-
-
-
 
 
 

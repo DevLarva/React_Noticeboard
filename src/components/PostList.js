@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api/api";  // API 유틸리티 파일을 임포트
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Box } from '@mui/material';
 
 function PostList() {
@@ -7,7 +7,7 @@ function PostList() {
 
     useEffect(() => {
         // 게시물 목록 가져오기
-        axios.get('/api/andn/articles')
+        api.get('/api/andn/articles')
             .then(response => {
                 setPosts(response.data);
             })
@@ -55,3 +55,4 @@ function PostList() {
 }
 
 export default PostList;
+
