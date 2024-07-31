@@ -66,6 +66,7 @@ export default function PostView() {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -76,6 +77,7 @@ export default function PostView() {
                         value={locate}
                         onChange={(e) => setLocate(e.target.value)}
                         required
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -86,6 +88,7 @@ export default function PostView() {
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                         required
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -96,6 +99,7 @@ export default function PostView() {
                         value={designer}
                         onChange={(e) => setDesigner(e.target.value)}
                         required
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -109,6 +113,7 @@ export default function PostView() {
                             onChange={(e) => setBoothWidth(e.target.value.replace(/[^0-9]/g, ''))}
                             required
                             sx={{ flex: 1 }}
+                            autoComplete="off"
                         />
                         <Typography sx={{ mx: 1 }}>mm</Typography>
                         <Typography sx={{ mx: 3 }}>X</Typography>
@@ -118,6 +123,7 @@ export default function PostView() {
                             onChange={(e) => setBoothHeight(e.target.value.replace(/[^0-9]/g, ''))}
                             required
                             sx={{ flex: 1 }}
+                            autoComplete="off"
                         />
                         <Typography sx={{ mx: 1 }}>mm</Typography>
                     </Box>
@@ -131,6 +137,7 @@ export default function PostView() {
                         onChange={(update) => setInstallDateRange(update)}
                         dateFormat="yyyy/MM/dd"
                         customInput={<TextField fullWidth label="설치 기간" variant="outlined" />}
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -164,6 +171,7 @@ export default function PostView() {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         required
+                        autoComplete="off"
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
