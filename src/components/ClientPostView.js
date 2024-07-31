@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Paper, Typography, Grid, TextField, Button, Box, RadioGroup, Container, FormControlLabel, Radio, Tooltip, Divider } from '@mui/material';
+import { Paper, Typography, Grid, TextField, Button, Box, Container, Divider } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DatePicker from 'react-datepicker';
@@ -24,14 +24,11 @@ export default function ClientPostView() {
     const [collectionLoc, setCollectionLoc] = useState('');//수거장소
     const [memo, setMemo] = useState('');//메모
 
-
     const onDrop = useCallback((acceptedFiles) => {
         setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     }, []);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
-
-    // 다시 공부 필요.
 
     const handleSubmit = () => {
         console.log({
@@ -47,9 +44,16 @@ export default function ClientPostView() {
         setCallNumber('');
         setLocation('');
         setBoothLayout('');
+        setBoothmanager('');
+        setBoothcallNumber('');
         setInstallDate(null);
         setRemoveDate(null);
         setSelectedFiles([]);
+        setApplicant('');
+        setApplicantNum('');
+        setCollectionDay('');
+        setCollectionLoc('');
+        setMemo('');
     };
 
     return (
@@ -129,7 +133,6 @@ export default function ClientPostView() {
                             autoComplete="off"
                         />
                     </Grid>
-
                     <Grid item xs={12}>
                         <Typography variant="h6">부스 담당자</Typography>
                         <Divider />
@@ -176,7 +179,6 @@ export default function ClientPostView() {
                             autoComplete="off"
                         />
                     </Grid>
-
                     <Grid item xs={12}>
                         <Typography variant="h6">그래픽 신청 내역</Typography>
                         <Divider />
@@ -202,16 +204,6 @@ export default function ClientPostView() {
                             </Box>
                         )}
                     </Grid>
-                    {/* <Grid item xs={6}>
-                        <TextField
-                            label="행사명"
-                            variant="outlined"
-                            fullWidth
-                            value={eventName}
-                            onChange={(e) => setEventName(e.target.value)}
-                            required
-                            autoComplete="off"
-                        /> */}
                     <Grid item xs={12}>
                         <Typography variant="h6">물품 픽업</Typography>
                         <Divider />
@@ -297,8 +289,6 @@ export default function ClientPostView() {
         </Container>
     );
 }
-
-
 
 
 

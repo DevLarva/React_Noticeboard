@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Box } from '@mui/material';
 
-export default function PostList({ posts }) {
+function PostList() {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        // 게시물 목록 가져오기
+        axios.get('/api/andn/articles')
+            .then(response => {
+                setPosts(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    }, []);
+
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -26,11 +40,11 @@ export default function PostList({ posts }) {
                         </TableRow>
                     ) : (
                         posts.map((post, index) => (
-                            <TableRow key={index}>
+                            <TableRow key={post.id}>
                                 <TableCell sx={{ width: '10%' }}>{index + 1}</TableCell>
                                 <TableCell sx={{ width: '50%' }}>{post.title}</TableCell>
                                 <TableCell sx={{ width: '20%' }}>{post.author}</TableCell>
-                                <TableCell sx={{ width: '20%' }}>{post.date}</TableCell>
+                                <TableCell sx={{ width: '20%' }}>{new Date(post.createAt).toLocaleDateString()}</TableCell>
                             </TableRow>
                         ))
                     )}
@@ -39,3 +53,5 @@ export default function PostList({ posts }) {
         </TableContainer>
     );
 }
+
+export default PostList;
