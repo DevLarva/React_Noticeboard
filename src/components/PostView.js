@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -7,15 +8,28 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 
 export default function PostView() {
-    const [title, setTitle] = useState('');     //행사명
-    const [locate, setLocate] = useState('');   //행사장소
-    const [content, setContent] = useState(''); //내용
-    const [companyName, setCompanyName] = useState(''); //업체명
-    const [boothWidth, setBoothWidth] = useState('');   //부스 크기(너비)
-    const [boothHeight, setBoothHeight] = useState(''); //부스 크기(높이)
-    const [installDateRange, setInstallDateRange] = useState([null, null]);   // 설치 날짜 범위
-    const [selectedFiles, setSelectedFiles] = useState([]); //첨부 파일
-    const [designer, setDesigner] = useState('');       //담당 디자이너
+    const [title, setTitle] = useState('');
+    const [locate, setLocate] = useState('');
+    const [content, setContent] = useState('');
+    const [companyName, setCompanyName] = useState('');
+    const [boothWidth, setBoothWidth] = useState('');
+    const [boothHeight, setBoothHeight] = useState('');
+    const [installDateRange, setInstallDateRange] = useState([null, null]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [designer, setDesigner] = useState('');
+    const [outsourcingOptions, setOutsourcingOptions] = useState([]);
+    const [selectedOutsourcingId, setSelectedOutsourcingId] = useState('');
+
+    useEffect(() => {
+        // 외주업체 목록 가져오기
+        axios.get('/api/outsourcing')
+            .then(response => {
+                setOutsourcingOptions(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching outsourcing options:', error);
+            });
+    }, []);
 
     const onDrop = useCallback((acceptedFiles) => {
         setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
@@ -33,8 +47,33 @@ export default function PostView() {
         }
     };
 
-    const handleSubmit = () => {
-        console.log({ title, locate, content, companyName, boothWidth, boothHeight, installDateRange });
+    const handleSubmit = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('locate', locate);
+            formData.append('content', content);
+            formData.append('companyName', companyName);
+            formData.append('boothWidth', boothWidth);
+            formData.append('boothHeight', boothHeight);
+            formData.append('installDateRange', installDateRange);
+            formData.append('designer', designer);
+            formData.append('outsourcingId', selectedOutsourcingId);
+
+            selectedFiles.forEach(file => {
+                formData.append('files', file);
+            });
+
+            const response = await axios.post('/api/andn/article', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('게시물이 성공적으로 저장되었습니다:', response.data);
+            handleCancel(); // 폼 리셋
+        } catch (error) {
+            console.error('게시물 저장 중 오류 발생:', error);
+        }
     };
 
     const handleCancel = () => {
@@ -47,6 +86,7 @@ export default function PostView() {
         setInstallDateRange([null, null]);
         setSelectedFiles([]);
         setDesigner('');
+        setSelectedOutsourcingId('');
     };
 
     return (
@@ -198,7 +238,6 @@ export default function PostView() {
         </Paper>
     );
 }
-
 
 
 
