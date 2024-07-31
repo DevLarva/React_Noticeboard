@@ -61,6 +61,7 @@ export default function ClientPostView() {
                             value={eventName}
                             onChange={(e) => setEventName(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -71,6 +72,7 @@ export default function ClientPostView() {
                             value={companyName}
                             onChange={(e) => setCompanyName(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -81,6 +83,7 @@ export default function ClientPostView() {
                             value={manager}
                             onChange={(e) => setManager(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -91,6 +94,7 @@ export default function ClientPostView() {
                             value={callNumber}
                             onChange={(e) => setCallNumber(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -101,6 +105,7 @@ export default function ClientPostView() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -111,6 +116,7 @@ export default function ClientPostView() {
                             value={boothLayout}
                             onChange={(e) => setBoothLayout(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
 
@@ -126,6 +132,7 @@ export default function ClientPostView() {
                             value={manager}
                             onChange={(e) => setManager(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -136,6 +143,7 @@ export default function ClientPostView() {
                             value={callNumber}
                             onChange={(e) => setCallNumber(e.target.value)}
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -145,6 +153,7 @@ export default function ClientPostView() {
                             onChange={(date) => setInstallDate(date)}
                             dateFormat="yyyy/MM/dd"
                             customInput={<TextField fullWidth label="설치 예정일시" variant="outlined" />}
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -154,6 +163,7 @@ export default function ClientPostView() {
                             onChange={(date) => setRemoveDate(date)}
                             dateFormat="yyyy/MM/dd"
                             customInput={<TextField fullWidth label="철거 예정일시" variant="outlined" />}
+                            autoComplete="off"
                         />
                     </Grid>
 
@@ -193,6 +203,7 @@ export default function ClientPostView() {
                             variant="outlined"
                             fullWidth
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -201,6 +212,7 @@ export default function ClientPostView() {
                             variant="outlined"
                             fullWidth
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -209,6 +221,7 @@ export default function ClientPostView() {
                             variant="outlined"
                             fullWidth
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -217,6 +230,7 @@ export default function ClientPostView() {
                             variant="outlined"
                             fullWidth
                             required
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -226,6 +240,7 @@ export default function ClientPostView() {
                             fullWidth
                             multiline
                             rows={4}
+                            autoComplete="off"
                         />
                     </Grid>
                     <Grid item xs={6}>
