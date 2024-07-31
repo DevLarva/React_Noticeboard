@@ -106,7 +106,7 @@ export default function PostView() {
                         <TextField
                             variant="outlined"
                             value={boothWidth}
-                            onChange={(e) => setBoothWidth(e.target.value)}
+                            onChange={(e) => setBoothWidth(e.target.value.replace(/[^0-9]/g, ''))}
                             required
                             sx={{ flex: 1 }}
                         />
@@ -115,7 +115,7 @@ export default function PostView() {
                         <TextField
                             variant="outlined"
                             value={boothHeight}
-                            onChange={(e) => setBoothHeight(e.target.value)}
+                            onChange={(e) => setBoothHeight(e.target.value.replace(/[^0-9]/g, ''))}
                             required
                             sx={{ flex: 1 }}
                         />
