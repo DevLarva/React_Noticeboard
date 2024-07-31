@@ -91,7 +91,7 @@ export default function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/newpost" element={<PostView onPostSaved={() => { }} />} />
+          <Route path="/newpost" element={<ClientPostView onPostSaved={() => { }} />} />
           <Route path="/client/posts" element={<ClientPostList />} />
         </Routes>
       </Container>

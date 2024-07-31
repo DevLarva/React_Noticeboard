@@ -11,11 +11,18 @@ export default function ClientPostView() {
     const [companyName, setCompanyName] = useState(''); //업체명
     const [manager, setManager] = useState(''); // 담당자
     const [callNumber, setCallNumber] = useState('');   //연락처
-    const [location, setLocation] = useState('');   //장소
+    const [location, setLocation] = useState('');   //행사 장소
     const [boothLayout, setBoothLayout] = useState(''); //부스배치도
+    const [boothmanager, setBoothmanager] = useState(''); // 부스 담당자
+    const [boothcallNumber, setBoothcallNumber] = useState('');   //연락처
     const [installDate, setInstallDate] = useState(null);   //설치일자
     const [removeDate, setRemoveDate] = useState(null); // 철수일자
     const [selectedFiles, setSelectedFiles] = useState([]); //첨부파일
+    const [applicant, setApplicant] = useState('');//신청자
+    const [applicantNum, setApplicantNum] = useState('');//신청자 연락처
+    const [collectionDay, setCollectionDay] = useState('');//수거일시
+    const [collectionLoc, setCollectionLoc] = useState('');//수거장소
+    const [memo, setMemo] = useState('');//메모
 
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -27,7 +34,10 @@ export default function ClientPostView() {
     // 다시 공부 필요.
 
     const handleSubmit = () => {
-        console.log({ eventName, companyName, manager, callNumber, location, boothLayout, installDate, removeDate, selectedFiles });
+        console.log({
+            eventName, companyName, manager, callNumber, location, boothLayout, boothmanager, boothcallNumber,
+            installDate, removeDate, selectedFiles, applicant, applicantNum, collectionDay, collectionLoc, memo
+        });
     };
 
     const handleCancel = () => {
@@ -129,8 +139,8 @@ export default function ClientPostView() {
                             label="담당자"
                             variant="outlined"
                             fullWidth
-                            value={manager}
-                            onChange={(e) => setManager(e.target.value)}
+                            value={boothmanager}
+                            onChange={(e) => setBoothmanager(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -140,8 +150,8 @@ export default function ClientPostView() {
                             label="연락처"
                             variant="outlined"
                             fullWidth
-                            value={callNumber}
-                            onChange={(e) => setCallNumber(e.target.value)}
+                            value={boothcallNumber}
+                            onChange={(e) => setBoothcallNumber(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -192,7 +202,16 @@ export default function ClientPostView() {
                             </Box>
                         )}
                     </Grid>
-
+                    {/* <Grid item xs={6}>
+                        <TextField
+                            label="행사명"
+                            variant="outlined"
+                            fullWidth
+                            value={eventName}
+                            onChange={(e) => setEventName(e.target.value)}
+                            required
+                            autoComplete="off"
+                        /> */}
                     <Grid item xs={12}>
                         <Typography variant="h6">물품 픽업</Typography>
                         <Divider />
@@ -202,6 +221,8 @@ export default function ClientPostView() {
                             label="신청인"
                             variant="outlined"
                             fullWidth
+                            value={applicant}
+                            onChange={(e) => setApplicant(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -211,6 +232,8 @@ export default function ClientPostView() {
                             label="연락처"
                             variant="outlined"
                             fullWidth
+                            value={applicantNum}
+                            onChange={(e) => setApplicantNum(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -220,6 +243,8 @@ export default function ClientPostView() {
                             label="수거일시"
                             variant="outlined"
                             fullWidth
+                            value={collectionDay}
+                            onChange={(e) => setCollectionDay(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -229,6 +254,8 @@ export default function ClientPostView() {
                             label="수거장소"
                             variant="outlined"
                             fullWidth
+                            value={collectionLoc}
+                            onChange={(e) => setCollectionLoc(e.target.value)}
                             required
                             autoComplete="off"
                         />
@@ -238,6 +265,8 @@ export default function ClientPostView() {
                             label="메모"
                             variant="outlined"
                             fullWidth
+                            value={memo}
+                            onChange={(e) => setMemo(e.target.value)}
                             multiline
                             rows={4}
                             autoComplete="off"
