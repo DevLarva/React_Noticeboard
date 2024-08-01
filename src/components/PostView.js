@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import api from "../api/api";  // API 유틸리티 파일을 임포트
 import { useDropzone } from 'react-dropzone';
-import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel, IconButton } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
@@ -37,14 +38,8 @@ export default function PostView() {
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
 
-    const handleUpload = () => {
-        if (selectedFiles.length > 0) {
-            selectedFiles.forEach(file => {
-                console.log(file);
-            });
-        } else {
-            console.log("파일이 선택되지 않았습니다.");
-        }
+    const handleFileRemove = (fileToRemove) => {
+        setSelectedFiles((prevFiles) => prevFiles.filter(file => file !== fileToRemove));
     };
 
     const handleSubmit = async () => {
@@ -194,9 +189,14 @@ export default function PostView() {
                     {selectedFiles.length > 0 && (
                         <Box mt={2}>
                             {selectedFiles.map((file, index) => (
-                                <Typography key={index} variant="body2">
-                                    선택된 파일: {file.name}
-                                </Typography>
+                                <Box key={index} display="flex" alignItems="center" justifyContent="space-between">
+                                    <Typography variant="body2">
+                                        {file.name}
+                                    </Typography>
+                                    <IconButton onClick={() => handleFileRemove(file)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Box>
                             ))}
                         </Box>
                     )}
@@ -259,7 +259,6 @@ export default function PostView() {
         </Paper>
     );
 }
-
 
 
 /*
