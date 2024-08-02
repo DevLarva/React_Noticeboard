@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import api from "../api/api";  // API 유틸리티 파일을 임포트
+import { useNavigate } from 'react-router-dom';
+import api from "../api/api";
 import { useDropzone } from 'react-dropzone';
 import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel, IconButton } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -12,7 +12,6 @@ import { ko } from 'date-fns/locale';
 export default function PostView() {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
-
     const [locate, setLocate] = useState('');
     const [content, setContent] = useState('');
     const [companyName, setCompanyName] = useState('');
@@ -25,7 +24,6 @@ export default function PostView() {
     const [selectedOutsourcingId, setSelectedOutsourcingId] = useState('');
 
     useEffect(() => {
-        // 외주업체 목록 가져오기
         api.get('/api/outsourcing')
             .then(response => {
                 setOutsourcingOptions(response.data);
@@ -64,11 +62,13 @@ export default function PostView() {
 
             const response = await api.post('/api/andn/article', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer YOUR_TOKEN_HERE'  // Add your token here
                 }
             });
             console.log('게시물이 성공적으로 저장되었습니다:', response.data);
-            handleCancel(); // 폼 리셋
+            handleCancel();
+            navigate("/");
         } catch (error) {
             console.error('게시물 저장 중 오류 발생:', error);
         }
@@ -85,8 +85,9 @@ export default function PostView() {
         setSelectedFiles([]);
         setDesigner('');
         setSelectedOutsourcingId('');
-        navigate("/")
+        navigate("/");
     };
+
 
     return (
         <Paper sx={{ p: 3, mt: 3 }}>

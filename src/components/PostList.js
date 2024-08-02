@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import api from "../api/api";  // API 유틸리티 파일을 임포트
+import api from "../api/api";  // API utility file
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, Box } from '@mui/material';
 
 function PostList() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        // 게시물 목록 가져오기
+        // Fetch posts list
         api.get('/api/andn/articles')
             .then(response => {
                 setPosts(response.data);
@@ -55,4 +55,3 @@ function PostList() {
 }
 
 export default PostList;
-
