@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import api from "../api/api";  // API 유틸리티 파일을 임포트
 import { useDropzone } from 'react-dropzone';
 import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel, IconButton } from '@mui/material';
@@ -9,7 +10,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 
 export default function PostView() {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
+
     const [locate, setLocate] = useState('');
     const [content, setContent] = useState('');
     const [companyName, setCompanyName] = useState('');
@@ -82,6 +85,7 @@ export default function PostView() {
         setSelectedFiles([]);
         setDesigner('');
         setSelectedOutsourcingId('');
+        navigate("/")
     };
 
     return (
