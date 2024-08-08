@@ -1,15 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from "../api/api";
-import { useDropzone } from 'react-dropzone';
 import { Paper, Typography, Grid, TextField, Button, Box, Checkbox, FormGroup, FormControlLabel, IconButton } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from 'date-fns/locale';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // Import for CloudUploadIcon
+import DeleteIcon from '@mui/icons-material/Delete'; // Import for DeleteIcon
+import DatePicker from 'react-datepicker'; // Import for DatePicker
+import { ko } from 'date-fns/locale'; // Import for ko locale
+import { useDropzone } from 'react-dropzone'; // Import for useDropzone
+import { savePost, getOutsourcingArticles } from '../api/api'; // Named imports from api.js
 
-export default function PostView() {
+export default function PostView({ onPostSaved }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [locate, setLocate] = useState('');
@@ -24,9 +23,10 @@ export default function PostView() {
     const [selectedOutsourcingId, setSelectedOutsourcingId] = useState('');
 
     useEffect(() => {
-        api.get('/api/outsourcing')
+        // Fetch outsourcing options
+        getOutsourcingArticles()
             .then(response => {
-                setOutsourcingOptions(response.data);
+                setOutsourcingOptions(response);
             })
             .catch(error => {
                 console.error('Error fetching outsourcing options:', error);
@@ -37,7 +37,11 @@ export default function PostView() {
         setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     }, []);
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*, application/pdf', maxSize: 3145728 });
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        accept: 'image/*, application/pdf',
+        maxSize: 3145728 // 3MB
+    });
 
     const handleFileRemove = (fileToRemove) => {
         setSelectedFiles((prevFiles) => prevFiles.filter(file => file !== fileToRemove));
@@ -60,15 +64,10 @@ export default function PostView() {
                 formData.append('files', file);
             });
 
-            const response = await api.post('/api/andn/article', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Bearer YOUR_TOKEN_HERE'  // Add your token here
-                }
-            });
-            console.log('게시물이 성공적으로 저장되었습니다:', response.data);
-            handleCancel();
-            navigate("/");
+            await savePost(formData); // Use savePost from api.js
+            console.log('게시물이 성공적으로 저장되었습니다');
+            onPostSaved(); // Call the onPostSaved callback
+            navigate('/');
         } catch (error) {
             console.error('게시물 저장 중 오류 발생:', error);
         }
@@ -85,7 +84,7 @@ export default function PostView() {
         setSelectedFiles([]);
         setDesigner('');
         setSelectedOutsourcingId('');
-        navigate("/");
+        navigate('/');
     };
 
 
@@ -264,16 +263,3 @@ export default function PostView() {
         </Paper>
     );
 }
-
-
-/*
-필수 내용
-행사명 , 행사 장소
-업체명, 부스사이즈
-설치기간, 행사기간, 철수기간
-담당디자이너
-
-행사 기간, 설치기간 철수 기간 모두 기간제로(~) 로 표현 달력 2개씩
-TODO: 첨부파일 선택된것들 삭제하기 위한 버튼 추가필요, 부스 크기 숫자만 입력 받게끔. 기간 입력 받을때 텍스트 필드처럼 작동 안하게(자동완성)
-시간 라이브러리 추가하기
-*/
