@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import SearchBar from './components/SearchBar';
-import PostList from './components/PostList';
-import NewPostButton from './components/NewPostButton';
-import { getArticles } from './apiService';
+import SearchBar from './SearchBar';
+import PostList from './PostList';
+import NewPostButton from './NewPostButton';
+import { getArticles } from '../api/api';  // API 호출 관련 함수 import
 import { useNavigate } from 'react-router-dom';
 
 function Main() {

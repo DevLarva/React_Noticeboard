@@ -28,8 +28,8 @@
 //     );
 // };
 import React, { useState, useEffect } from 'react';
-import { getOutsourcingArticles } from './apiService';
-import PostList from './components/PostList'; // PostList 컴포넌트 import
+import { getOutsourcingArticles } from '../api/api';
+import PostList from './PostList'; // PostList 컴포넌트 import
 
 function ClientPostList() {
     const [posts, setPosts] = useState([]);
